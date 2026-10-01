@@ -21,13 +21,14 @@ body {
 }
 
 .header {
+    position: fixed;
+    width: 99vw;
     background-color: var(--cor-principal);
+    border-bottom: 2px solid #d400ff;
     display: flex;
     justify-content: space-between;
     padding: 10px;
     align-items: center;
-    border-bottom: solid 2px;
-    border-color: var(--cor-fundo);
 }
 
 .nav {
@@ -82,21 +83,19 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../assets/img/banner_cadastro.jpeg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../assets/img/banner_login.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 100vh;
-    position: relative;
 }
 
 .formulario_cadastro {
     display: flex;
-    width: 1200px;
-    height: 700px;
+    width: 1000px;
+    padding: 30px 0px;
     align-items: center;
     flex-direction: column;
-    position: absolute;
     background-color: var(--cor-texto-secundaria);
     opacity: 90%;
     border-radius: 12px;
@@ -113,6 +112,7 @@ body {
 }
 
 .title span {
+    font-size: 36px;
     color: #8d4899;
 }
 
@@ -122,12 +122,34 @@ body {
 }
 
 input {
-    width: 20vw;
-    height: 30px;
+    width: 310px;
+    height: 38px;
+
     margin-top: 5px;
     margin-bottom: 10px;
-    border-radius: 5px;
-    border: none;
+    border-radius: 7px;
+
+    padding: 0px 20px;
+
+
+    border: 1px solid #686565;
+}
+
+input:focus {
+    outline: none;
+    border-color: #cd18ff;
+}
+
+.container_inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+#divSenha {
+    font-size: 12px;
+    width: 280px;
+    text-align: left;
+
 }
 
 label {
@@ -136,13 +158,19 @@ label {
 
 button {
     margin-top: 10px;
-    width: 10vw;
+    width: 20vw;
     height: 50px;
     font-size: 15px;
-    border-radius: 5px;
+    font-weight: bolder;
+    text-transform: uppercase;
+    border-radius: 10px;
     border: none;
     color: white;
     background-color: #22001b;
+}
+
+button:hover {
+    cursor: pointer;
 }
 
 .link_cadastro {

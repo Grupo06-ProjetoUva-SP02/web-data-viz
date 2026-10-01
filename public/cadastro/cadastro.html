@@ -33,35 +33,43 @@
             <div class="title">
                 <span>Cadastre-se</span>
             </div>
-            <label for="ipt_email">E-mail:</label>
-            <input type="text" id="ipt_email" onkeyup="verificarEmail()">
 
-            <label for="ipt_email">nome:</label>
-            <input type="text" id="nome_input">
+            <div class="container_inputs">
+                <label for="ipt_email">Código de ativação:</label>
+                <input type="text" id="ipt_email" placeholder="Insira o código de ativação fornecido" onkeyup="verificarEmail()">
+            </div>
+
+            <div class="container_inputs">                
+                <label for="ipt_telefone">Nome:</label>
+                <input type="text" placeholder="Insira seu nome" id="ipt_nome">
+            </div>
+            
+            <div class="container_inputs">
+                <label for="ipt_email">E-mail:</label>
+                <input type="text" id="ipt_email" placeholder="Insira seu email" onkeyup="verificarEmail()">
+            </div>
 
             <div id="emailValidacao"></div>
 
-            <label for="ipt_CNPJ">CNPJ:</label>
-            <input type="text" id="ipt_CNPJ">
-
-            <label for="ipt_telefone">Telefone:</label>
-            <input type="text" id="ipt_telefone">
-
-            <label for="ipt_cep">CEP:</label>
-            <input type="text" id="ipt_cep">
-
-            <label for="ipt_senha">Senha:</label>
-            <input type="password" id="ipt_senha" onkeyup="verificarSenha()">
-
-            <div id="divSenha">A senha deve ter mais que 8 caracteres, uma letra maiúscula e uma mínuscula</div> <br>
-
-            <label for="ipt_confirmarSenha">Confirmar senha:</label>
-            <input type="password" id="ipt_confirmarSenha">
-
-            <label for="ipt_confirmarSenha">Codigo:</label>
-            <input type="password" id="codigo_input">
             
-            <button onclick="cadastrar()">Entrar</button>
+            <div class="container_inputs">
+                <label for="ipt_CNPJ">CPF:</label>
+                <input type="text" placeholder="Insira seu CPF" id="ipt_CPF">
+            </div>
+
+            <div class="container_inputs">                
+                <label for="ipt_senha">Senha:</label>
+                <input type="password" id="ipt_senha" placeholder="Insira sua senha" onkeyup="verificarSenha()">
+                <div id="divSenha">A senha deve ter mais que 8 caracteres, uma letra maiúscula e uma mínuscula</div> <br>
+            </div>
+
+
+            <div class="container_inputs">                
+                <label for="ipt_confirmarSenha">Confirmar senha:</label>
+                <input type="password" id="ipt_confirmarSenha" placeholder="Confirme sua senha">
+            </div>
+            
+            <button onclick="verificar ()">Cadastrar</button>
             <div class="link_cadastro">
                 Já possui uma conta?
                 <a href="../login/login.html">Clique aqui</a>
@@ -76,12 +84,12 @@
     
     function verificar () {
         let email = ipt_email.value
-        let CNPJ = ipt_CNPJ.value
-        let telefone = ipt_telefone.value
-        let cep = ipt_cep.value
+        let cpf = ipt_CPF.value
+        let nome = ipt_nome.value
         let senha = ipt_senha.value
+        let confirmarSenha = ipt_confirmarSenha.value
 
-        if (email == "" || CNPJ == "" || telefone == "" || cep == "" || senha == "") {
+        if (email == "" || cpf == "" || nome == "" || senha == "" || confirmarSenha == "") {
             alert (`Preencha todos os campos!`)
         } else if (senha != confirmarSenha) {
             alert (`As senhas não coincidem!`)
@@ -89,6 +97,20 @@
             alert (`Cadastro realizado com sucesso!`)
         } }
 
+    function verificarEmail() {
+        let email = ipt_email.value;
+        let indice_com = email.indexOf('.com');
+        let indice_arroba = email.indexOf('@');
+        let arroba_antes_com = indice_arroba < indice_com;
+        let comeca_com_arroba = email.startsWith('@');
+        let contem_espaco = email.includes(' ');
+
+        if (!email || !indice_com == -1 || !indice_arroba == -1 || !arroba_antes_com || comeca_com_arroba || contem_espaco) {
+            emailValidacao.innerHTML = `<p style="color: red">Email Inválido</p>`
+        } else {
+            emailValidacao.innerHTML = `<p style="color: green">Email Válido</p>`
+        }
+    }
 
     function verificarSenha(){
     let senha = ipt_senha.value
@@ -106,120 +128,4 @@
     }
 
     </script>
-
-    <script>
-
-  // Array para armazenar empresas cadastradas para validação de código de ativação 
-  let listaEmpresasCadastradas = [];
-
-  function cadastrar() {
-    // aguardar();
-
-    //Recupere o valor da nova input pelo nome do id
-    // Agora vá para o método fetch logo abaixo
-    var nomeVar = nome_input.value;
-    var emailVar = ipt_email.value;
-    var senhaVar = ipt_senha.value;
-    var cpfVar = ipt_CNPJ.value;
-    var codigoVar = codigo_input.value;
-    var idEmpresaVincular
-
-    // Verificando se há algum campo em branco
-    if (
-      nomeVar == "" ||
-      emailVar == "" ||
-      cpfVar == "" ||
-      senhaVar == "" ||
-      codigoVar == ""
-    ) {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
-
-      finalizarAguardar();
-      return false;
-    } else {
-      setInterval(sumirMensagem, 5000);
-    }
-
-    // Verificando se o código de ativação é de alguma empresa cadastrada
-    for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-      if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
-        idEmpresaVincular = listaEmpresasCadastradas[i].id
-        console.log("Código de ativação válido.");
-        break;
-      } else {
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
-        finalizarAguardar();
-      }
-    }
-
-    // Enviando o valor da nova input
-    fetch("/usuarios/cadastrar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        // crie um atributo que recebe o valor recuperado aqui
-        // Agora vá para o arquivo routes/usuario.js
-        nomeServer: nomeVar,
-        emailServer: emailVar,
-        cpfServer: cpfVar,
-        senhaServer: senhaVar,
-        idEmpresaVincularServer: idEmpresaVincular
-      }),
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
-
-        if (resposta.ok) {
-          cardErro.style.display = "block";
-
-          mensagem_erro.innerHTML =
-            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
-
-          setTimeout(() => {
-            window.location = "login.html";
-          }, "2000");
-
-          limparFormulario();
-          finalizarAguardar();
-        } else {
-          throw "Houve um erro ao tentar realizar o cadastro!";
-        }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-        finalizarAguardar();
-      });
-
-    return false;
-  }
-
-  // Listando empresas cadastradas 
-  function listar() {
-    fetch("/empresas/listar", {
-      method: "GET",
-    })
-      .then(function (resposta) {
-        resposta.json().then((empresas) => {
-          empresas.forEach((empresa) => {
-            listaEmpresasCadastradas.push(empresa);
-
-            console.log("listaEmpresasCadastradas")
-            console.log(listaEmpresasCadastradas[0].codigo_ativacao)
-          });
-        });
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
-  }
-
-  function sumirMensagem() {
-    cardErro.style.display = "none";
-  }
-</script>
 </html>
