@@ -101,13 +101,14 @@ body {
 .formulario_login {
     display: flex;
     width: 40vw;
-    height: 50vh;
     align-items: center;
     flex-direction: column;
     position: absolute;
     background-color: var(--cor-texto-secundaria);
     opacity: 90%;
     border-radius: 12px;
+    
+    padding: 0px 0px 20px 0px;
 }
 
 .containerInputs {
@@ -165,7 +166,7 @@ label {
 button {
     margin-top: 10px;
     width: 20vw;
-    height: 5vh;
+    height: 50px;
     font-size: 15px;
     border-radius: 10px;
     border: none;
